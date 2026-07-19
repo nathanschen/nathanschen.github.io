@@ -21,9 +21,9 @@ Then open `http://localhost:8000`.
 
 ## Publish with GitHub Pages
 
-This repository is named `nathanschen.github.io`, so GitHub Pages serves the site at `https://nathanschen.github.io/`. The included `CNAME` file also preserves the configured custom domain: `https://nathanschen.com/`.
+This repository is named `nathanschen.github.io`, so GitHub Pages serves the site at `https://nathanschen.github.io/`.
 
-The social-share and canonical metadata in `index.html` use `https://nathanschen.com/` as the primary public URL. If the custom domain changes later, update those metadata values and the `CNAME` file together.
+The social-share and canonical metadata in `index.html` use that GitHub Pages URL as the primary public address. If you later purchase a custom domain, add a `CNAME` file and update those metadata values together.
 
 ## Export notes
 
