@@ -15,6 +15,7 @@
 		['#text60', '#text28', -1, 4.71, 1],
 		['#text61', '#text25', -1, 5.82, 1]
 	];
+	const glyphSizeMultiplier = 1.25;
 
 	if (!home || !surface || !signature) return;
 
@@ -115,7 +116,9 @@
 			const row = Math.floor(index / columns);
 			const left = outerX + column * (cellWidth + gapX);
 			const top = water.top + outerY + row * (cellHeight + gapY);
-			const scale = Math.max(0, Math.min(1, (cellWidth - (inset * 2)) / item.safeWidth, (cellHeight - (inset * 2)) / item.safeHeight));
+			const fittedScale = Math.max(0, Math.min(1, (cellWidth - (inset * 2)) / item.safeWidth, (cellHeight - (inset * 2)) / item.safeHeight));
+			const minimumScale = window.innerWidth >= 900 ? 0.85 : 0.45;
+			const scale = Math.max(fittedScale, minimumScale);
 			const safeWidth = item.safeWidth * scale;
 			const safeHeight = item.safeHeight * scale;
 
@@ -188,6 +191,7 @@
 			if (!glyph || !label || !element || label.parentElement !== element) return;
 
 			element.classList.add('home-swimming-fish');
+			glyph.style.fontSize = `${(parseFloat(window.getComputedStyle(glyph).fontSize) * glyphSizeMultiplier).toFixed(2)}px`;
 			element.style.setProperty('height', 'auto', 'important');
 			element.style.setProperty('min-height', '0', 'important');
 			swimLayer.append(element);
