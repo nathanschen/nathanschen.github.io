@@ -5,7 +5,6 @@
 
 	const home = document.querySelector('#home-section');
 	const surface = document.querySelector('#divider07');
-	const signature = document.querySelector('#text34');
 	const swimLayer = document.createElement('div');
 	const fishPairs = [
 		['#text01', '#text35', -1, 0.22, 1],
@@ -16,16 +15,25 @@
 		['#text61', '#text25', -1, 5.82, 1]
 	];
 	const glyphSizeMultiplier = 1.25;
+	const mobileOffsets = [
+		{ x: -10, y: -10 },
+		{ x: 10, y: 6 },
+		{ x: 8, y: -6 },
+		{ x: -8, y: 10 },
+		{ x: -10, y: 4 },
+		{ x: 10, y: -8 }
+	];
 
-	if (!home || !surface || !signature) return;
+	if (!home || !surface) return;
 
 	swimLayer.id = 'home-swim-layer';
-	document.body.append(swimLayer);
+	home.append(swimLayer);
 
 	const fish = [];
 	let previousTime = performance.now();
 	let animationFrame;
 	let entryAnimationFrame;
+	let resizeAnimationFrame;
 	let swimTime = 0;
 	let resumeAt = performance.now();
 	let homeWasActive = isHomeVisible();
@@ -78,10 +86,12 @@
 	}
 
 	function measure(item) {
-		item.width = item.element.offsetWidth;
-		item.height = item.element.offsetHeight;
 		item.glyphWidth = item.glyph.offsetWidth;
 		item.glyphHeight = item.glyph.offsetHeight;
+		const requiredHeight = Math.ceil(item.glyphWidth + item.label.offsetHeight + 8);
+		item.element.style.setProperty('min-height', `${requiredHeight}px`, 'important');
+		item.width = item.element.offsetWidth;
+		item.height = item.element.offsetHeight;
 		const glyphDiagonal = Math.hypot(item.glyphWidth, item.glyphHeight);
 
 		// The label stays horizontal while the glyph turns, so reserve the
@@ -91,10 +101,10 @@
 	}
 
 	function waterBounds() {
+		const homeBounds = home.getBoundingClientRect();
 		const surfaceBounds = surface.getBoundingClientRect();
-		const signatureBounds = signature.getBoundingClientRect();
-		const top = Math.max(24, surfaceBounds.bottom + 24);
-		const bottom = Math.max(top + 80, Math.min(window.innerHeight - 24, signatureBounds.top - 24));
+		const top = Math.max(24, surfaceBounds.bottom - homeBounds.top + 24);
+		const bottom = Math.max(top + 80, home.clientHeight - 24);
 
 		return { top, bottom };
 	}
@@ -110,6 +120,7 @@
 		const cellWidth = (window.innerWidth - (outerX * 2) - (gapX * (columns - 1))) / columns;
 		const cellHeight = (water.bottom - water.top - (outerY * 2) - (gapY * (rows - 1))) / rows;
 		const inset = 8;
+		const isMobile = window.innerWidth < 900;
 
 		fish.forEach((item, index) => {
 			const column = index % columns;
@@ -117,15 +128,17 @@
 			const left = outerX + column * (cellWidth + gapX);
 			const top = water.top + outerY + row * (cellHeight + gapY);
 			const fittedScale = Math.max(0, Math.min(1, (cellWidth - (inset * 2)) / item.safeWidth, (cellHeight - (inset * 2)) / item.safeHeight));
-			const minimumScale = window.innerWidth >= 900 ? 0.85 : 0.45;
-			const scale = Math.max(fittedScale, minimumScale);
+			const scale = isMobile
+			? Math.min(fittedScale, window.innerWidth < 360 ? 0.45 : 0.55)
+				: Math.max(fittedScale, 0.85);
 			const safeWidth = item.safeWidth * scale;
 			const safeHeight = item.safeHeight * scale;
+			const offset = isMobile ? mobileOffsets[index] : { x: 0, y: 0 };
 
 			item.route = {
 				scale,
-				centerX: left + (cellWidth / 2),
-				centerY: top + (cellHeight / 2),
+				centerX: left + (cellWidth / 2) + offset.x,
+				centerY: top + (cellHeight / 2) + offset.y,
 				amplitudeX: Math.max(0, (cellWidth - safeWidth - (inset * 2)) / 2),
 				amplitudeY: Math.max(0, (cellHeight - safeHeight - (inset * 2)) / 2),
 				speed: 0.000043 + ((index % 3) * 0.000004),
@@ -193,7 +206,6 @@
 			element.classList.add('home-swimming-fish');
 			glyph.style.fontSize = `${(parseFloat(window.getComputedStyle(glyph).fontSize) * glyphSizeMultiplier).toFixed(2)}px`;
 			element.style.setProperty('height', 'auto', 'important');
-			element.style.setProperty('min-height', '0', 'important');
 			swimLayer.append(element);
 			fish.push({
 				element,
@@ -234,7 +246,17 @@
 	}
 
 	function resize() {
+		// Carrd briefly gives the incoming section the outgoing section's
+		// height, then animates it down to its own height. Avoid measuring
+		// while Home is hidden, but keep the fish aligned through that resize.
+		if (home.clientWidth === 0 || home.clientHeight === 0) return;
+
 		layoutFish();
+	}
+
+	function scheduleResize() {
+		window.cancelAnimationFrame(resizeAnimationFrame);
+		resizeAnimationFrame = window.requestAnimationFrame(resize);
 	}
 
 	function resumeAnimation() {
@@ -245,8 +267,12 @@
 	}
 
 	initializeFish();
-	window.addEventListener('resize', resize, { passive: true });
-	if (document.fonts?.ready) document.fonts.ready.then(resize);
+	window.addEventListener('resize', scheduleResize, { passive: true });
+	if (document.fonts?.ready) document.fonts.ready.then(scheduleResize);
+
+	if ('ResizeObserver' in window) {
+		new ResizeObserver(scheduleResize).observe(home);
+	}
 	window.addEventListener('hashchange', () => {
 		resumeAt = (!window.location.hash || window.location.hash === '#home') ? performance.now() + 900 : Infinity;
 		homeWasActive = false;
