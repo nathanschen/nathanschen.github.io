@@ -26,6 +26,18 @@
 	font-size: 2.25em;
 }
 
+/* Keep the About page's core copy and Industry Experience block in its
+ * opening composition instead of waiting for a scroll-triggered fade. */
+#about-section #text65,
+#about-section #text30,
+#about-section #text23,
+#about-section #text40 {
+	filter: none !important;
+	opacity: 1 !important;
+	transform: none !important;
+	transition: none !important;
+}
+
 #container01 > .wrapper > .inner.has-header-signature {
 	align-items: center !important;
 	display: grid !important;
