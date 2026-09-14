@@ -17,6 +17,10 @@
 	width: max-content;
 }
 
+#text34.header-signature a {
+	text-decoration: none;
+}
+
 #container01 #text05 {
 	transform: translateY(0);
 }
