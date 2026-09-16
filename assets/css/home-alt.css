@@ -70,12 +70,13 @@ body.alt-home-active a:focus-visible {
 
 #home-section.alt-homepage > .alt-home-shell {
 	margin: 0 !important;
+	padding-top: 1.05rem;
 }
 
 /* Reuse the Aquarium page's animated wave and its original header spacing. */
 #home-section.alt-homepage > #divider07 {
 	margin-bottom: 0.5rem !important;
-	margin-top: -0.55rem !important;
+	margin-top: 0.5rem !important;
 }
 
 .alt-homepage a {
@@ -163,26 +164,51 @@ body.alt-home-active a:focus-visible {
 	color: var(--alt-blue);
 }
 
-.alt-side-links .alt-aquarium-button {
+.alt-aquarium-button {
 	align-items: center;
 	border: 1px solid currentColor;
 	border-radius: 999px;
 	display: inline-flex;
+	font-family: 'Newsreader', serif;
+	font-size: clamp(0.76rem, 1.01vw, 0.89rem);
 	justify-content: center;
+	line-height: 1.26;
 	margin-top: 0.45rem;
 	padding: 0.28rem 0.72rem 0.32rem;
 	width: fit-content;
 }
 
-.alt-side-links .alt-aquarium-button span {
+.alt-aquarium-button span {
 	display: inline-block;
 	transform: translateY(0.12em);
 }
 
-.alt-side-links .alt-aquarium-button:hover,
-.alt-side-links .alt-aquarium-button:focus-visible {
+.alt-aquarium-button:hover,
+.alt-aquarium-button:focus-visible {
 	background: var(--alt-blue);
 	border-color: var(--alt-blue);
+	color: #ffffff;
+}
+
+#container01 > .wrapper > .inner.has-header-signature #text46 {
+	position: relative;
+	width: max-content !important;
+}
+
+#container01 #text46 .alt-standard-button {
+	color: var(--alt-blue);
+	left: calc(100% + 0.65rem);
+	margin-top: 0;
+	position: absolute;
+	text-decoration: none;
+	top: 50%;
+	transform: translateY(calc(-50% + 0.4em - 4px));
+}
+
+#container01 #text46 .alt-standard-button:hover,
+#container01 #text46 .alt-standard-button:focus-visible {
+	background: var(--alt-black);
+	border-color: var(--alt-black);
 	color: #ffffff;
 }
 
@@ -353,11 +379,15 @@ body.alt-home-active a:focus-visible {
 @media (min-width: 1440px) {
 	#home-section.alt-homepage {
 		font-size: 0.9rem;
-		padding: 1.25rem 0;
+		padding: 0 0 1.25rem;
 	}
 
 	.alt-project-index {
 		top: 1.25rem;
+	}
+
+	#home-section.alt-homepage > .alt-home-shell {
+		padding-top: 1.25rem;
 	}
 }
 
@@ -433,7 +463,11 @@ body.alt-home-active a:focus-visible {
 
 @media (max-width: 600px) {
 	#home-section.alt-homepage {
-		padding: 0.85rem 0 1.25rem;
+		padding: 0 0 1.25rem;
+	}
+
+	#home-section.alt-homepage > .alt-home-shell {
+		padding-top: 0.85rem;
 	}
 
 	.alt-project-index {
@@ -476,7 +510,7 @@ body.alt-home-active a:focus-visible {
 
 /* Keep the final project visually connected to the shared footer. */
 #home-section.alt-homepage {
-	padding-bottom: 1.25rem;
+	padding: 0 0 1.25rem;
 }
 
 .alt-project:last-child {
