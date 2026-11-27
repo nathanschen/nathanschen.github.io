@@ -976,3 +976,102 @@ body.logo-returning .site-main > .inner > section.inactive {
 		flex-basis: 100%;
 	}
 }
+
+/* Mobile reading layout, matching the research project subpages. */
+@media (max-width: 600px) {
+	#client-section {
+		--client-text-axis: 0px;
+	}
+
+	#fastatucla-section {
+		--fast-text-axis: 0px;
+	}
+
+	#client-section .client-intro {
+		grid-template-columns: minmax(0, 1fr);
+		row-gap: 0.75rem;
+	}
+
+	#client-section .client-intro > * {
+		grid-column: 1;
+		min-width: 0;
+	}
+
+	:is(#client-section, #fastatucla-section) .text-component {
+		font-size: 16px;
+		line-height: 1.5;
+	}
+
+	#client-section #text16,
+	#fastatucla-section #text19 {
+		font-size: 32px;
+		line-height: 1.25;
+	}
+
+	#client-section #text06,
+	#client-section #text18,
+	#fastatucla-section #text39 {
+		font-size: 22px;
+		line-height: 1.3;
+	}
+
+	#fastatucla-section .links-component {
+		font-size: 14px;
+		line-height: 1.4;
+	}
+
+	#fastatucla-section .fast-project-copy > .links-component:first-child {
+		font-size: 22px;
+		line-height: 1.3;
+	}
+
+	#client-section .alt-client-buttons .alt-aquarium-button {
+		font-size: 16px;
+		min-height: 44px;
+		padding: 0.5rem 0.85rem;
+	}
+
+	:is(#client-section, #fastatucla-section) .gallery-component {
+		left: auto;
+		right: auto;
+		margin-left: 0;
+		margin-right: 0;
+		width: 100%;
+		max-width: 100%;
+	}
+
+	:is(#client-section, #fastatucla-section) .gallery-component > .inner {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	:is(#client-section, #fastatucla-section) .gallery-component ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		overflow: visible;
+		padding-bottom: 0;
+	}
+
+	:is(#client-section, #fastatucla-section) .gallery-component ul > li {
+		flex: 0 1 100%;
+		min-width: 0;
+		width: 100%;
+		max-width: 100%;
+	}
+
+	:is(#client-section, #fastatucla-section) .gallery-component .thumbnail,
+	:is(#client-section, #fastatucla-section) .gallery-component .frame {
+		display: block;
+		width: 100%;
+		max-width: 100%;
+	}
+
+	:is(#client-section, #fastatucla-section) .gallery-component img {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+		max-height: none;
+		object-fit: contain;
+	}
+}
