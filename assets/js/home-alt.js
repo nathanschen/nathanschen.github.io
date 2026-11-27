@@ -1,11 +1,28 @@
 (() => {
 	'use strict';
 
-	const home = document.querySelector('#home-section.alt-homepage');
+	const home = document.querySelector('#home-section');
 	if (!home) return;
+	// The section router replaces className when a subpage is loaded directly.
+	home.classList.add('alt-homepage');
 
 	const cards = [...home.querySelectorAll('[data-alt-project]')];
 	const links = [...home.querySelectorAll('[data-alt-nav]')];
+	const logoFish = home.querySelector('.alt-home-logo');
+	const routeHeader = document.querySelector('#header.alt-route-header');
+	const identityRow = logoFish.closest('[data-alt-project="about"]');
+	const logoHomeMarker = document.createComment('Homepage identity row position');
+	identityRow.before(logoHomeMarker);
+	let departureRect = null;
+
+	// Capture the visible origin before the section router hides the old page.
+	document.addEventListener('click', (event) => {
+		const link = event.target.closest('a[href^="#"]');
+		if (link && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+			departureRect = logoFish.getBoundingClientRect();
+		}
+	}, true);
+
 
 	home.querySelectorAll('.alt-expanding-fish').forEach((expandingFish) => {
 		const project = expandingFish.closest('[data-alt-project]').dataset.altProject;
@@ -17,6 +34,7 @@
 		const photoStrip = expandingFish.querySelector('.alt-fish-photos');
 
 		function randomizePhotos() {
+			if (!photoStrip) return;
 			const shuffled = [...photoSources];
 			for (let i = shuffled.length - 1; i > 0; i--) {
 				const j = Math.floor(Math.random() * (i + 1));
@@ -63,14 +81,35 @@
 		window.addEventListener('resize', fitFishBody);
 		expandingFish.addEventListener('pointerenter', openFish);
 		expandingFish.addEventListener('focus', openFish);
-		photoStrip.querySelectorAll('img').forEach((image) => image.addEventListener('load', fitFishBody, { once: true }));
+		photoStrip?.querySelectorAll('img').forEach((image) => image.addEventListener('load', fitFishBody, { once: true }));
 		document.fonts.ready.then(fitFishBody);
 		fitFishBody();
 	});
 
 	function updateHomeChrome() {
 		const hash = window.location.hash;
-		document.body.classList.toggle('alt-home-active', !hash || hash === '#home');
+		const isHome = !hash || hash === '#home';
+		const wasInHeader = identityRow.parentElement === routeHeader;
+		const origin = departureRect || logoFish.getBoundingClientRect();
+		departureRect = null;
+		document.body.classList.toggle('alt-home-active', isHome);
+
+		if (isHome) logoHomeMarker.after(identityRow);
+		else routeHeader.append(identityRow);
+		logoFish.setAttribute('href', isHome ? '#about' : '#home');
+		logoFish.setAttribute('aria-label', isHome ? 'About Nathan S. Chen and CV' : 'Return to homepage');
+
+		if (wasInHeader === isHome && origin.width && origin.height
+			&& !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			const destination = logoFish.getBoundingClientRect();
+			if (destination.width && destination.height) {
+				logoFish.getAnimations().forEach((animation) => animation.cancel());
+				logoFish.animate([
+					{ transform: `translate(${origin.left - destination.left}px, ${origin.top - destination.top}px)` },
+					{ transform: 'translate(0, 0)' }
+				], { duration: 420, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+			}
+		}
 	}
 
 	function setCurrent(project) {

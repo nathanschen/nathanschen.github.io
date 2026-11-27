@@ -184,8 +184,8 @@ body.alt-home-active a:focus-visible {
 	transform: translateY(0.12em);
 }
 
-.alt-aquarium-button:hover,
-.alt-aquarium-button:focus-visible {
+.alt-side-links .alt-aquarium-button:hover,
+.alt-side-links .alt-aquarium-button:focus-visible {
 	background: var(--alt-blue);
 	border-color: var(--alt-blue);
 	color: #ffffff;
@@ -487,4 +487,200 @@ body.alt-home-active a:focus-visible {
 	.alt-homepage *::after {
 		transition-duration: 0.01ms !important;
 	}
+}
+
+.alt-project[data-alt-project='about'] h2 {
+	transform: translateY(6px);
+}
+
+.alt-project:not([data-alt-project='about']) .alt-project-copy {
+	transform: translateY(4px);
+}
+
+.alt-side-links .alt-about-button {
+	border-color: var(--alt-blue);
+	color: var(--alt-blue);
+}
+
+/* Subpages receive the same logo element that lives in the first home row. */
+#header.alt-route-header {
+	align-items: center;
+	display: flex;
+	min-height: 3.4rem;
+	transition: none;
+}
+
+body.alt-home-active #header.alt-route-header {
+	display: none;
+}
+
+.alt-home-logo {
+	text-decoration: none;
+	color: var(--alt-blue) !important;
+	position: relative;
+	z-index: 3;
+}
+
+/* Match the homepage row's width and columns, preserving both x positions. */
+#header.alt-route-header > .alt-project {
+	color: var(--alt-black);
+	max-width: 52rem;
+	padding-bottom: 0;
+	width: 100%;
+}
+
+#header.alt-route-header h2 a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* Use the header identity row's second column for the Client introduction. */
+#client-section .client-intro {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	column-gap: clamp(1rem, 2vw, 2rem);
+	row-gap: 0.5rem;
+	max-width: 52rem;
+	width: 100%;
+}
+
+#client-section .client-intro > * {
+	grid-column: 2;
+	margin: 0;
+	text-align: left;
+}
+
+#client-section #text16 {
+	font-family: 'Newsreader', serif;
+	font-weight: 400;
+	letter-spacing: normal;
+	width: auto;
+}
+
+#client-section .alt-client-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.65rem;
+	max-width: none;
+}
+
+#client-section .alt-client-buttons .alt-aquarium-button {
+	margin-top: 0;
+	text-decoration: none;
+}
+
+@media (max-width: 600px) {
+	#client-section .client-intro {
+		grid-template-columns: minmax(0, 1fr) 7rem;
+		column-gap: 0.85rem;
+	}
+}
+
+/* Continue the introduction's left axis through all Client page copy. */
+#client-section {
+	--client-text-axis: calc((min(100%, 52rem) + clamp(1rem, 2vw, 2rem)) / 2);
+}
+
+#client-section .text-component {
+	font-family: 'Newsreader', serif;
+	font-weight: 400;
+	letter-spacing: normal;
+	text-align: left;
+}
+
+#client-section > .text-component {
+	margin-left: var(--client-text-axis);
+	width: calc(100% - var(--client-text-axis));
+}
+
+@media (max-width: 600px) {
+	#client-section {
+		--client-text-axis: calc(100% - 7rem);
+	}
+}
+
+#fastatucla-section {
+	--fast-text-axis: calc((min(100%, 52rem) + clamp(1rem, 2vw, 2rem)) / 2);
+}
+
+#fastatucla-section .text-component,
+#fastatucla-section .links-component {
+	font-family: 'Newsreader', serif;
+	font-weight: 400;
+	letter-spacing: normal;
+	text-align: left;
+	justify-content: flex-start;
+}
+
+#fastatucla-section .fast-intro > *,
+#fastatucla-section > .text-component,
+#fastatucla-section .fast-project-copy {
+	margin-left: var(--fast-text-axis);
+	width: calc(100% - var(--fast-text-axis));
+}
+
+#fastatucla-section .fast-project {
+	margin-top: 2.5rem;
+	margin-bottom: 3rem;
+}
+
+#fastatucla-section .fast-project-copy > * {
+	margin-top: 0;
+	margin-bottom: 0.75rem;
+	width: 100%;
+}
+
+#fastatucla-section .gallery-component {
+	margin: 1.25rem 0 0;
+	width: 100%;
+	max-width: 100%;
+	text-align: left;
+}
+
+#fastatucla-section .gallery-component > .inner {
+	width: 100%;
+	max-width: 100%;
+}
+
+#fastatucla-section .gallery-component ul {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: safe center;
+	align-items: flex-start;
+	gap: 0.75rem;
+	overflow-x: auto;
+	padding-bottom: 0.5rem;
+}
+
+#fastatucla-section .gallery-component ul > li {
+	flex: none;
+	width: auto;
+	max-width: none;
+}
+
+#fastatucla-section .gallery-component .thumbnail,
+#fastatucla-section .gallery-component .frame {
+	display: block;
+	width: auto;
+	max-width: none;
+}
+
+#fastatucla-section .gallery-component img {
+	display: block;
+	height: clamp(9rem, 20vw, 18rem);
+	max-height: none;
+	width: auto;
+	max-width: none;
+	object-fit: contain;
+}
+
+@media (max-width: 600px) {
+	#fastatucla-section {
+		--fast-text-axis: calc(100% - 7rem);
+	}
+}
+
+#fastatucla-section #links22,
+#fastatucla-section #links06 {
+	font-size: 1.375em;
 }
