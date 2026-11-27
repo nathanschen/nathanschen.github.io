@@ -32,6 +32,7 @@
 	let closeActiveFish = null;
 	home.querySelectorAll('.alt-expanding-fish').forEach((expandingFish) => {
 		const project = expandingFish.closest('[data-alt-project]').dataset.altProject;
+		const fixedPhotos = expandingFish.hasAttribute('data-fixed-photos');
 		const photoSources = [...new Set(
 			[...document.querySelectorAll(`#${project}-section img`)]
 				.map((image) => image.dataset.src || image.getAttribute('src'))
@@ -69,7 +70,7 @@
 
 
 		function randomizePhotos() {
-			if (!photoStrip) return;
+			if (!photoStrip || fixedPhotos) return;
 			const shuffled = [...photoSources];
 			for (let i = shuffled.length - 1; i > 0; i--) {
 				const j = Math.floor(Math.random() * (i + 1));
