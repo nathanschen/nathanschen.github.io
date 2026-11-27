@@ -1,3 +1,8 @@
+/* The standard home uses its About row in place of the header. */
+body.alt-home-active #header {
+	display: none;
+}
+
 :root {
 	--alt-blue: #0057ff;
 	--alt-black: #121212;
@@ -282,6 +287,10 @@ body.alt-home-active a:focus-visible {
 .alt-expanding-fish:focus-visible .alt-fish-body {
 	opacity: 1;
 	width: var(--fish-body-width);
+}
+
+.alt-project[data-alt-project='about'] {
+	--alt-topic-color: var(--alt-blue);
 }
 
 .alt-project[data-alt-project='client'] {
