@@ -7,6 +7,8 @@
 		'about',
 		'client',
 		'fastatucla',
+		'zarlab',
+		'prform',
 		'mebrand',
 		'articles',
 		'personal',

@@ -244,7 +244,7 @@ body.alt-home-active a:focus-visible {
 	white-space: nowrap;
 }
 
-/* The head stays anchored while the photo body pushes only the tail. */
+/* The expanded fish shifts past the neighboring fish column. */
 .alt-expanding-fish {
 	--fish-body-width: 0px;
 	position: relative;
@@ -259,7 +259,7 @@ body.alt-home-active a:focus-visible {
 .alt-fish-body {
 	display: block;
 	flex: none;
-	height: 2.8812em;
+	height: var(--fish-photo-height, 2.8812em);
 	opacity: 0;
 	overflow: hidden;
 	width: 0;
@@ -269,10 +269,11 @@ body.alt-home-active a:focus-visible {
 .alt-fish-photos {
 	align-items: center;
 	display: flex;
-	gap: 0.16em;
+	gap: var(--fish-photo-gap, 0.16em);
 	height: 100%;
-	padding: 0 0.16em;
+	padding: 0 var(--fish-photo-gap, 0.16em);
 	width: var(--fish-body-width);
+	overflow: hidden;
 }
 
 .alt-fish-photos img {
@@ -283,8 +284,7 @@ body.alt-home-active a:focus-visible {
 	width: auto;
 }
 
-.alt-expanding-fish:hover .alt-fish-body,
-.alt-expanding-fish:focus-visible .alt-fish-body {
+.alt-fish-trigger.is-open .alt-fish-body {
 	opacity: 1;
 	width: var(--fish-body-width);
 }
@@ -309,11 +309,11 @@ body.alt-home-active a:focus-visible {
 	--alt-topic-color: #e6cf05;
 }
 
-.alt-project[data-alt-project='placeholder-1'] {
+.alt-project[data-alt-project='zarlab'] {
 	--alt-topic-color: #a11515;
 }
 
-.alt-project[data-alt-project='placeholder-2'] {
+.alt-project[data-alt-project='prform'] {
 	--alt-topic-color: #1590a1;
 }
 
@@ -599,12 +599,12 @@ body.alt-home-active #header.alt-route-header {
 	}
 }
 
-#fastatucla-section {
+:is(#fastatucla-section, #zarlab-section, #prform-section) {
 	--fast-text-axis: calc((min(100%, 52rem) + clamp(1rem, 2vw, 2rem)) / 2);
 }
 
-#fastatucla-section .text-component,
-#fastatucla-section .links-component {
+:is(#fastatucla-section, #zarlab-section, #prform-section) .text-component,
+:is(#fastatucla-section, #zarlab-section, #prform-section) .links-component {
 	font-family: 'Newsreader', serif;
 	font-weight: 400;
 	letter-spacing: normal;
@@ -612,37 +612,37 @@ body.alt-home-active #header.alt-route-header {
 	justify-content: flex-start;
 }
 
-#fastatucla-section .fast-intro > *,
-#fastatucla-section > .text-component,
-#fastatucla-section .fast-project-copy {
+:is(#fastatucla-section, #zarlab-section, #prform-section) .fast-intro > *,
+:is(#fastatucla-section, #zarlab-section, #prform-section) > .text-component,
+:is(#fastatucla-section, #zarlab-section, #prform-section) .fast-project-copy {
 	margin-left: var(--fast-text-axis);
 	width: calc(100% - var(--fast-text-axis));
 }
 
-#fastatucla-section .fast-project {
+:is(#fastatucla-section, #zarlab-section, #prform-section) .fast-project {
 	margin-top: 2.5rem;
 	margin-bottom: 3rem;
 }
 
-#fastatucla-section .fast-project-copy > * {
+:is(#fastatucla-section, #zarlab-section, #prform-section) .fast-project-copy > * {
 	margin-top: 0;
 	margin-bottom: 0.75rem;
 	width: 100%;
 }
 
-#fastatucla-section .gallery-component {
+:is(#fastatucla-section, #zarlab-section, #prform-section) .gallery-component {
 	margin: 1.25rem 0 0;
 	width: 100%;
 	max-width: 100%;
 	text-align: left;
 }
 
-#fastatucla-section .gallery-component > .inner {
+:is(#fastatucla-section, #zarlab-section, #prform-section) .gallery-component > .inner {
 	width: 100%;
 	max-width: 100%;
 }
 
-#fastatucla-section .gallery-component ul {
+:is(#fastatucla-section, #zarlab-section, #prform-section) .gallery-component ul {
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: safe center;
@@ -652,20 +652,20 @@ body.alt-home-active #header.alt-route-header {
 	padding-bottom: 0.5rem;
 }
 
-#fastatucla-section .gallery-component ul > li {
+:is(#fastatucla-section, #zarlab-section, #prform-section) .gallery-component ul > li {
 	flex: none;
 	width: auto;
 	max-width: none;
 }
 
-#fastatucla-section .gallery-component .thumbnail,
-#fastatucla-section .gallery-component .frame {
+:is(#fastatucla-section, #zarlab-section, #prform-section) .gallery-component .thumbnail,
+:is(#fastatucla-section, #zarlab-section, #prform-section) .gallery-component .frame {
 	display: block;
 	width: auto;
 	max-width: none;
 }
 
-#fastatucla-section .gallery-component img {
+:is(#fastatucla-section, #zarlab-section, #prform-section) .gallery-component img {
 	display: block;
 	height: clamp(9rem, 20vw, 18rem);
 	max-height: none;
@@ -675,12 +675,222 @@ body.alt-home-active #header.alt-route-header {
 }
 
 @media (max-width: 600px) {
-	#fastatucla-section {
+	:is(#fastatucla-section, #zarlab-section, #prform-section) {
 		--fast-text-axis: calc(100% - 7rem);
 	}
 }
 
-#fastatucla-section #links22,
-#fastatucla-section #links06 {
+:is(#fastatucla-section, #zarlab-section, #prform-section) #links22,
+:is(#fastatucla-section, #zarlab-section, #prform-section) #links06 {
 	font-size: 1.375em;
+}
+
+.alt-fish-trigger {
+	display: block;
+	position: relative;
+	justify-self: start;
+	height: 3.4rem;
+	width: var(--fish-closed-width, 7rem);
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.alt-fish-trigger > .alt-expanding-fish {
+	pointer-events: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Expanded hit areas exist only while interactive, never during closing. */
+.alt-fish-trigger.is-open {
+	z-index: 5;
+}
+
+.alt-fish-trigger.is-interactive::before,
+.alt-fish-trigger.is-interactive::after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+}
+
+.alt-fish-trigger.is-interactive::before {
+	left: 0;
+	top: 0;
+	width: var(--fish-open-width);
+	height: 100%;
+}
+
+.alt-fish-trigger.is-interactive::after {
+	left: var(--fish-hit-left);
+	top: var(--fish-hit-top);
+	width: var(--fish-hit-width);
+	height: var(--fish-hit-height);
+}
+
+.alt-fish-trigger.is-open > .alt-expanding-fish {
+	transform: translate(var(--fish-shift, 0px), var(--fish-shift-y, 0px));
+}
+
+/* Preserve the outgoing page's layout until its opacity fade is complete. */
+body.alt-home-active.logo-returning #header.alt-route-header {
+	display: flex;
+}
+
+body.logo-returning .site-main > .inner > section.inactive {
+	filter: none;
+	transition: opacity 375ms ease;
+}
+
+/* Fit the wide Executive Directors photo within the content margins. */
+:is(#fastatucla-section, #zarlab-section, #prform-section) #gallery07 ul {
+	overflow: visible;
+}
+
+:is(#fastatucla-section, #zarlab-section, #prform-section) #gallery07 ul > li {
+	flex: 0 1 100%;
+	min-width: 0;
+	max-width: 100%;
+}
+
+:is(#fastatucla-section, #zarlab-section, #prform-section) #gallery07 .thumbnail,
+:is(#fastatucla-section, #zarlab-section, #prform-section) #gallery07 .frame {
+	width: 100%;
+	max-width: 100%;
+}
+
+:is(#fastatucla-section, #zarlab-section, #prform-section) #gallery07 img {
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+}
+
+:is(#zarlab-section, #prform-section) {
+	font-family: 'Newsreader', serif;
+	color: var(--alt-black);
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-title {
+	font-size: 2.5em;
+	line-height: 1.375;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-project-title {
+	font-size: 1.375em;
+	line-height: 1.3;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-copy,
+:is(#zarlab-section, #prform-section) .zarlab-contributions {
+	font-size: 1em;
+	line-height: 1.5;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-contributions {
+	list-style: disc;
+	padding-left: 1.1em;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-contributions li {
+	margin-bottom: 0.7em;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.65rem;
+	max-width: none;
+	margin-top: 0.85rem;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-actions .alt-aquarium-button {
+	margin-top: 0;
+	text-decoration: none;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-gallery ul {
+	flex-wrap: wrap;
+	overflow: visible;
+	align-items: start;
+	gap: 1rem;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-gallery ul > li {
+	flex: 0 1 calc(50% - 0.5rem);
+	min-width: 0;
+	max-width: 100%;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-gallery-wide ul > li {
+	flex-basis: 100%;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-gallery figure {
+	margin: 0;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-gallery img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 30rem;
+	margin: 0 auto;
+	object-fit: contain;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-gallery-wide img {
+	max-height: 34rem;
+}
+
+:is(#zarlab-section, #prform-section) figcaption {
+	font-size: 0.85em;
+	line-height: 1.4;
+	color: #666666;
+	margin-top: 0.55rem;
+	text-align: center;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-results {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95em;
+	line-height: 1.45;
+	margin: 1rem 0;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-results caption {
+	text-align: left;
+	font-size: 0.9em;
+	color: #666666;
+	margin-bottom: 0.5rem;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-results th,
+:is(#zarlab-section, #prform-section) .zarlab-results td {
+	padding: 0.65em 0.6em 0.65em 0;
+	border-bottom: 1px solid #dddddd;
+	text-align: left;
+	vertical-align: top;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-results th {
+	font-weight: 500;
+}
+
+:is(#zarlab-section, #prform-section) .zarlab-source-note {
+	margin-left: var(--fast-text-axis);
+	width: calc(100% - var(--fast-text-axis));
+	color: #666666;
+	font-size: 0.85em;
+}
+
+@media (max-width: 600px) {
+	:is(#zarlab-section, #prform-section) {
+		--fast-text-axis: 0px;
+	}
+
+	:is(#zarlab-section, #prform-section) .zarlab-gallery ul > li {
+		flex-basis: 100%;
+	}
 }
